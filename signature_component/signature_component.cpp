@@ -7,8 +7,8 @@
 //
 
 #include "signature_component.h"
-#include "Bloc.h"
-#include "uECC.h"
+#include "../Bloc.h"
+#include "micro-ecc/uECC.h"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <string>
@@ -85,6 +85,5 @@ PYBIND11_MODULE(signature_component, m) {
     py::class_<Signature>(m, "Signature")
         .def(py::init())
         .def("signMessage", &Signature::signMessage)
-        .def("validateSignature", &Signature::validateSignature)
-        .def("hex_str_to_uint8", &Signature::hex_str_to_uint8);
+        .def("validateSignature", &Signature::validateSignature);
 }

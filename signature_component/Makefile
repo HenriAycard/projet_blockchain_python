@@ -7,7 +7,7 @@ COMPOSANT = signature_component
 CPPFLAGS += -I../transaction_component
 
 LIBSO = ${COMPOSANT}.so
-LIBSO_OBJS = ${COMPOSANT}.o
+LIBSO_OBJS = ${COMPOSANT}.o micro-ecc/uECC.o
 
 DESTINATION_LIBSO=../components/${LIBSO}
 
@@ -15,8 +15,6 @@ all: ${DESTINATION_LIBSO}
 
 include ../gcc.mk
 include ../pybind11.mk
-
-
 	
 clean:
 	rm -f ${LIBSO}  ${LIBSO_OBJS} ${DESTINATION_LIBSO}

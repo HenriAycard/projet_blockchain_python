@@ -29,4 +29,4 @@ private:
 };
 
 
-#endif /* Signature_hpp */
+#endif
