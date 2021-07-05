@@ -24,7 +24,7 @@ __attribute__ ((visibility ("default"))) string Signature::signMessage(string da
     string dataHashed = hash(data);
     uint8_t* hash = hex_str_to_uint8(dataHashed.c_str());
     uint8_t* _private = hex_str_to_uint8(private_key.c_str());
-    uint8_t sig[64] = { 0 };
+    uint8_t sig[128] = { 0 };
 
     if (!uECC_sign(_private, hash, sizeof(hash), sig, curve)) {
         cout << "uECC_sign() failed" << endl;
@@ -81,9 +81,9 @@ uint8_t* Signature::hex_str_to_uint8(const char* string) {
     return data;
 }
 
-string Signature::hash(string data) {
+string Signature::SHA256(string data) {
     Hasheur hasheur = Hasheur();
-    string result = hasheur.hasher(data);
+    string result = Hasheur.SHA256(data);
     return result;
 }
 

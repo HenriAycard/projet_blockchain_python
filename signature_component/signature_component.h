@@ -26,7 +26,7 @@ public:
     bool validateSignature(string data, string public_key, string signature);
 private:
     uint8_t* hex_str_to_uint8(const char* string);
-    string hash(string data);
+    string SHA256(string data);
 };
 
 
