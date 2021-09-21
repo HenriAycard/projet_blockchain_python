@@ -30,7 +30,7 @@ __attribute__ ((visibility ("default"))) string Signature::signMessage(string da
         cout << "uECC_sign() failed" << endl;
     }
     vector<uint8_t> sigVector = fill_vector(sig, 64); 
-	return uint8_to_hex_str(sigVector);
+    return uint8_to_hex_str(sigVector);
 }
 
 __attribute__ ((visibility ("default"))) bool Signature::validateSignature(string data, string public_key, string _signature) {
