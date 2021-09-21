@@ -29,7 +29,8 @@ __attribute__ ((visibility ("default"))) string Signature::signMessage(string da
     if (!uECC_sign(_private, hash, sizeof(hash), sig, curve)) {
         cout << "uECC_sign() failed" << endl;
     }
-    return data;
+    vector<uint8_t> sigVector = fill_vector(sig, 64); 
+	return uint8_to_hex_str(sigVector);
 }
 
 __attribute__ ((visibility ("default"))) bool Signature::validateSignature(string data, string public_key, string _signature) {
@@ -79,6 +80,25 @@ uint8_t* Signature::hex_str_to_uint8(const char* string) {
     }
 
     return data;
+}
+
+string Signature::uint8_to_hex_str(vector<uint8_t>& v) {
+	stringstream ss;
+	ss << std::hex << setfill('0');
+	vector<uint8_t>::const_iterator it;
+
+	for (it = v.begin(); it != v.end(); it++) {
+		ss << setw(2) << static_cast<unsigned>(*it);
+	}
+	return ss.str();
+}
+
+vector<uint8_t> Signature::fill_vector(uint8_t* data, int size) {
+	std::vector<uint8_t> out;
+	for (int x = 0; x < size; x++){
+		out.push_back(data[x]);
+	}
+	return out;
 }
 
 string Signature::SHA256(string data) {
