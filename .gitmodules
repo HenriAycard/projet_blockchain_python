@@ -12,3 +12,6 @@
 	path = animal/pybind11
 	url = https://github.com/pybind/pybind11
 	branch = stable
+[submodule "signature_component/micro-ecc"]
+	path = signature_component/micro-ecc
+	url = https://github.com/jluuM2/micro-ecc/

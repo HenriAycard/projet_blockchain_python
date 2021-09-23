@@ -16,6 +16,9 @@
 #include <pybind11/stl.h>
 #include <pybind11/functional.h>
 
+#include "component_Hachage.cpp"
+
+
 namespace py = pybind11;
 
 using namespace std;
@@ -26,6 +29,10 @@ public:
     bool validateSignature(string data, string public_key, string signature);
 private:
     uint8_t* hex_str_to_uint8(const char* string);
+    string uint8_to_hex_str(vector<uint8_t>& v);
+    vector<uint8_t> fill_vector(uint8_t* data, int size);
+    string SHA256(string data);
+
 };
 
 

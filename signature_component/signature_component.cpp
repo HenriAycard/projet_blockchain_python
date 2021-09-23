@@ -8,7 +8,7 @@
 
 #include "signature_component.h"
 #include "../Bloc.h"
-#include "uECC.h"
+#include "micro-ecc/uECC.h"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <string>
@@ -18,23 +18,24 @@ namespace py = pybind11;
 using namespace std;
 
 
-string Signature::signMessage(string data, string private_key) {
+__attribute__ ((visibility ("default"))) string Signature::signMessage(string data, string private_key) {
     uECC_Curve curve = uECC_secp256k1();
-    
-    uint8_t* hash = hex_str_to_uint8(data.c_str());
+    string dataHashed = SHA256(data);
+    uint8_t* hash = hex_str_to_uint8(dataHashed.c_str());
     uint8_t* _private = hex_str_to_uint8(private_key.c_str());
-    uint8_t sig[64] = { 0 };
+    uint8_t sig[128] = { 0 };
 
     if (!uECC_sign(_private, hash, sizeof(hash), sig, curve)) {
         cout << "uECC_sign() failed" << endl;
     }
-    return data;
+    vector<uint8_t> sigVector = fill_vector(sig, 64); 
+    return uint8_to_hex_str(sigVector);
 }
 
-bool Signature::validateSignature(string data, string public_key, string _signature) {
+__attribute__ ((visibility ("default"))) bool Signature::validateSignature(string data, string public_key, string _signature) {
     uECC_Curve curve = uECC_secp256k1();
-    
-    uint8_t* hash = hex_str_to_uint8(data.c_str());
+    string dataHashed = SHA256(data);
+    uint8_t* hash = hex_str_to_uint8(dataHashed.c_str());
     uint8_t* _public = hex_str_to_uint8(public_key.c_str());
     uint8_t* _sig = hex_str_to_uint8(_signature.c_str());
 
@@ -78,6 +79,32 @@ uint8_t* Signature::hex_str_to_uint8(const char* string) {
     }
 
     return data;
+}
+
+string Signature::uint8_to_hex_str(vector<uint8_t>& v) {
+	stringstream ss;
+	ss << std::hex << setfill('0');
+	vector<uint8_t>::const_iterator it;
+
+	for (it = v.begin(); it != v.end(); it++) {
+		ss << setw(2) << static_cast<unsigned>(*it);
+	}
+	return ss.str();
+}
+
+vector<uint8_t> Signature::fill_vector(uint8_t* data, int size) {
+	std::vector<uint8_t> out;
+	for (int x = 0; x < size; x++){
+		out.push_back(data[x]);
+	}
+	return out;
+}
+
+string Signature::SHA256(string data) {
+    component_Hachage hasheur = component_Hachage();
+    string result = hasheur.SHA256(data);
+    return result;
+    //return "A8C8E2042F702DCA60AC688EDCDFC72F6EA535745B2A0FD01EF9506E4839C134";
 }
 
 
