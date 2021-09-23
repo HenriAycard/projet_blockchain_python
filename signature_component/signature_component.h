@@ -32,7 +32,6 @@ private:
     string uint8_to_hex_str(vector<uint8_t>& v);
     vector<uint8_t> fill_vector(uint8_t* data, int size);
     string SHA256(string data);
-
 };
 
 

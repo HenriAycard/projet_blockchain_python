@@ -8,6 +8,7 @@
 
 #include "signature_component.h"
 #include "../Bloc.h"
+#include "../Hasheur.h"
 #include "micro-ecc/uECC.h"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -21,6 +22,7 @@ using namespace std;
 __attribute__ ((visibility ("default"))) string Signature::signMessage(string data, string private_key) {
     uECC_Curve curve = uECC_secp256k1();
     string dataHashed = SHA256(data);
+
     uint8_t* hash = hex_str_to_uint8(dataHashed.c_str());
     uint8_t* _private = hex_str_to_uint8(private_key.c_str());
     uint8_t sig[128] = { 0 };
@@ -105,6 +107,7 @@ string Signature::SHA256(string data) {
     string result = hasheur.SHA256(data);
     return result;
     //return "A8C8E2042F702DCA60AC688EDCDFC72F6EA535745B2A0FD01EF9506E4839C134";
+
 }
 
 
