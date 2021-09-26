@@ -1,5 +1,7 @@
 
 #pragma once
+#ifndef _HASHEUR_H
+
 #include <string>
 #include <list>
 #include <pybind11/pybind11.h>
@@ -14,5 +16,6 @@ namespace py = pybind11;
 class Hasheur {
 public:
 	Hasheur();
-	std::string sha256(std::string data) {return "A8C8E2042F702DCA60AC688EDCDFC72F6EA535745B2A0FD01EF9506E4839C134";};
+	std::string SHA256(std::string data) {return "A8C8E2042F702DCA60AC688EDCDFC72F6EA535745B2A0FD01EF9506E4839C134";};
 };
+#endif
