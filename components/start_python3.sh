@@ -1,1 +1,1 @@
-LD_PRELOAD=./members_component.so python3
+LD_PRELOAD=./component_Hachage.so python3
